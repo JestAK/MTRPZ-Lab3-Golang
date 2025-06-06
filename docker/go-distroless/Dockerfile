@@ -12,10 +12,9 @@ COPY ../../templates ./templates
 
 RUN CGOOS=linux CGO_ENABLED=0 go build -o app .
 
-FROM scratch
-COPY --from=builder /app/templates  ./templates
+FROM gcr.io/distroless/base-debian12
 COPY --from=builder /app/app /app
 
 EXPOSE 8080
 
-ENTRYPOINT ["./app", "serve"] 
+ENTRYPOINT ["./app", "serve"]
